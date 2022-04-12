@@ -193,6 +193,9 @@ static void select_and_copy_line(uint8_t seq_index) { Macros.play(MACRO( D(LeftG
 static void go_sol(uint8_t seq_index) { Macros.play(MACRO( D(LeftGui),T(LeftArrow),U(LeftGui)));}//startline
 static void go_eol(uint8_t seq_index) { Macros.play(MACRO( D(LeftGui),T(RightArrow),U(LeftGui)));}//eol
 
+static void change_window_same_app(uint8_t seq_index) { Macros.play(MACRO( D(LeftGui),T(Backtick),U(LeftGui)));}//change window in the same app
+
+
 static void go_sod(uint8_t seq_index) { Macros.play(MACRO( D(LeftGui),T(Home),U(LeftGui)));}//start of document
 static void go_eod(uint8_t seq_index) { Macros.play(MACRO( D(LeftGui),T(End),U(LeftGui)));}//end of document
 static void go_up_ten_lines(uint8_t seq_index) { Macros.play(MACRO(T(UpArrow),T(UpArrow),T(UpArrow),T(UpArrow),T(UpArrow),T(UpArrow),T(UpArrow),T(UpArrow),T(UpArrow),T(UpArrow),T(UpArrow),T(UpArrow) ));}//ten lines up
@@ -253,8 +256,12 @@ static const kaleidoscope::plugin::Leader::dictionary_t leader_dictionary[] PROG
 
 
     
-    { LEADER_SEQ(LEAD(0), Key_C,Key_W),select_and_copy_word}, //select and copy word
-    { LEADER_SEQ(LEAD(0), Key_C,Key_C),select_and_copy_line}, //select and copy line
+    { LEADER_SEQ(LEAD(0), Key_Q,Key_W),select_and_copy_word}, //select and copy word
+    { LEADER_SEQ(LEAD(0), Key_Q,Key_E),select_and_copy_line}, //select and copy line
+    { LEADER_SEQ(LEAD(0), Key_Q,Key_Q),change_window_same_app}, //select and copy word
+
+
+  
 
     //VI-Like
     { LEADER_SEQ(LEAD(0), Key_V,Key_Y),go_sol}, //start of line
