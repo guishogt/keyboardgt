@@ -1,3 +1,6 @@
+#include <Kaleidoscope-LEDControl.h>
+#include <Kaleidoscope.h>
+
 /* -*- mode: c++ -*-
  * Atreus -- Chrysalis-enabled Sketch for the Keyboardio Atreus
  * Copyright (C) 2018, 2019  Keyboard.io, Inc
@@ -288,6 +291,7 @@ void setup() {
   QUKEYS(
     kaleidoscope::plugin::Qukey(0, KeyAddr(2, 11), Key_Hyper),   //qeu es ?, lo convierte en ctrl+cmnd+alt+shift para Karabiner
     kaleidoscope::plugin::Qukey(0, KeyAddr(1, 10), LSHIFT(Key_LeftGui) ),// letter l, when hold, becomes command+shift
+    kaleidoscope::plugin::Qukey(0, KeyAddr(1, 9), LSHIFT(Key_LeftAlt) ),// letter k, when hold, becomes alt+shift
     kaleidoscope::plugin::Qukey(0, KeyAddr(0, 9), Key_LeftGui) //letter k, when hold becomes command
     )
   //QUKEYS(kaleidoscope::plugin::Qukey(1, KeyAddr(3, 1), Key_Hyper)); //qeu es ?, lo convierte en ctrl+cmnd+alt+shift para Karabiner
