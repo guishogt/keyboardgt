@@ -129,8 +129,7 @@
 
 // --- Macro IDs ---
 enum {
-  MACRO_VERSION_INFO,
-  MACRO_TILDE
+  MACRO_VERSION_INFO
 };
 
 // --- TapDance IDs ---
@@ -150,7 +149,8 @@ enum {
 #define Key_And LSHIFT(Key_7)
 #define Key_Star LSHIFT(Key_8)
 #define Key_Plus LSHIFT(Key_Equals)
-#define Key_Tilde LSHIFT(Key_Backtick)
+// Key_Tilde: Shift + Backtick (HID 0x35) = ~ (tilde)
+#define Key_Tilde Key(SHIFT_HELD, 0x35)
 #define Key_LeftCurly LSHIFT(Key_LeftBracket)
 #define Key_RightCurly LSHIFT(Key_RightBracket)
 
@@ -226,7 +226,7 @@ KEYMAPS(
       ,Key_LeftBracket ,Key_RightBracket ,Key_Hash   ,Key_LeftCurly ,Key_RightCurly ,Key_Caret
       ,MoveToLayer(QWERTY) ,TG(UPPER) ,TG(MOUSE)     ,Key_LeftShift ,Key_Delete     ,Key_LeftControl
 
-                   ,Key_PageUp   ,Key_7 ,Key_8      ,Key_9 ,M(MACRO_TILDE)
+                   ,Key_PageUp   ,Key_7 ,Key_8      ,Key_9 ,Key_Tilde
                    ,Key_0        ,Key_4 ,Key_5      ,Key_6 ,___
       ,Key_And     ,Key_Star     ,Key_1 ,Key_2      ,Key_3 ,Key_Plus
       ,Key_LeftAlt ,Key_Space    ,Key_KeypadDot ,Key_Minus ,Key_0 ,Key_Equals
@@ -314,11 +314,6 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
     if (keyToggledOn(keyState)) {
       Macros.type(PSTR("Atreus NoChrysalis - "));
       Macros.type(PSTR(BUILD_INFORMATION));
-    }
-    break;
-  case MACRO_TILDE:
-    if (keyToggledOn(keyState)) {
-      Macros.type(PSTR("~"));
     }
     break;
   }
