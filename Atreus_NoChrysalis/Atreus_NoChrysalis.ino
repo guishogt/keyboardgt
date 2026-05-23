@@ -180,7 +180,7 @@ KEYMAPS(
   // LAYER 0: QWERTY - Default layer
   // ---------------------------------------------------------------------------
   //   +----+----+----+----+----+     +----+----+----+----+----+
-  //   | Q  | W  | E  |R/Sh| T  |     | Y  | U  | I  | O  | P  |
+  //   | Q  |W/L2| E  |R/Sh| T  |     | Y  | U  | I  | O  | P  |
   //   +----+----+----+----+----+     +----+----+----+----+----+
   //   | A  | S  | D  |F/L1|G/Sh|     |H/Sh| J  |K/AS|L/CS|LEAD|  <-- LEADER KEY
   //   +----+----+----+----+----+----+----+----+----+----+----+----+
@@ -190,7 +190,7 @@ KEYMAPS(
   //   +----+----+----+----+----+----+----+----+----+----+----+----+
   //                                       ^^^
   //                                  ;; = Cmd+Tab (TapDance)
-  // Qukeys: R/G/H=Shift, F=Layer1, K=Alt+Shift, L=Cmd+Shift
+  // Qukeys: W=Layer2, R/G/H=Shift, F=Layer1, K=Alt+Shift, L=Cmd+Shift
   //
   [QWERTY] = KEYMAP_STACKED
   (
@@ -234,14 +234,14 @@ KEYMAPS(
    ),
 
   // ---------------------------------------------------------------------------
-  // LAYER 2: UPPER - F-Keys, Navigation & Media
+  // LAYER 2: UPPER - F-Keys, Navigation & Media (hold W to access)
   // ---------------------------------------------------------------------------
   //   +----+----+----+----+----+     +----+----+----+----+----+
-  //   |Ins |Home| Up |End |PgUp|     | Up | F7 | F8 | F9 |F10 |
+  //   |Ins |Home| Up |End |PgUp|     |F10 | F7 | F8 | F9 |    |
   //   +----+----+----+----+----+     +----+----+----+----+----+
-  //   |Del | Lt | Dn | Rt |PgDn|     | Dn | F4 | F5 | F6 |F11 |
+  //   |Del | Lt | Dn | Rt |PgDn|     |F11 | F4 | F5 | F6 |    |
   //   +----+----+----+----+----+----+----+----+----+----+----+----+
-  //   |Ver |Vol+|    |    |    |    |    |    | F1 | F2 | F3 |F12 |
+  //   |Ver |Vol+|    |    |    |    |F12 | F1 | F2 | F3 |    |    |
   //   +----+----+----+----+----+----+----+----+----+----+----+----+
   //   |L0  |Vol-|    |    |    |    |    |    |L0  |PrSc|ScrL|Play|
   //   +----+----+----+----+----+----+----+----+----+----+----+----+
@@ -254,9 +254,9 @@ KEYMAPS(
       ,M(MACRO_VERSION_INFO) ,Consumer_VolumeIncrement ,XXX           ,XXX            ,___ ,___
       ,MoveToLayer(QWERTY)   ,Consumer_VolumeDecrement ,___           ,___            ,___ ,___
 
-                ,Key_UpArrow   ,Key_F7              ,Key_F8          ,Key_F9         ,Key_F10
-                ,Key_DownArrow ,Key_F4              ,Key_F5          ,Key_F6         ,Key_F11
-      ,___      ,XXX           ,Key_F1              ,Key_F2          ,Key_F3         ,Key_F12
+                ,Key_F10       ,Key_F7              ,Key_F8          ,Key_F9         ,___
+                ,Key_F11       ,Key_F4              ,Key_F5          ,Key_F6         ,___
+      ,___      ,Key_F12       ,Key_F1              ,Key_F2          ,Key_F3         ,___
       ,___      ,___           ,MoveToLayer(QWERTY) ,Key_PrintScreen ,Key_ScrollLock ,Consumer_PlaySlashPause
    ),
 
@@ -462,6 +462,8 @@ static const kaleidoscope::plugin::Leader::dictionary_t leader_dictionary[] PROG
 void setup() {
   // Qukeys: Dual-function keys
   QUKEYS(
+    // W → tap=W, hold=Layer2 (UPPER)
+    kaleidoscope::plugin::Qukey(0, KeyAddr(0, 1), ShiftToLayer(UPPER)),
     // R → tap=R, hold=Shift
     kaleidoscope::plugin::Qukey(0, KeyAddr(0, 3), Key_LeftShift),
     // F → tap=F, hold=Layer1
