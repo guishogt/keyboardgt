@@ -4,8 +4,7 @@
 
 ## Current Status: WORKING
 
-The firmware `Atreus_NoChrysalis/Atreus_NoChrysalis.ino` is verified against the
-Chrysalis export `2026.05.22_atreus.json` and all keys are correctly mapped.
+Firmware: `Atreus_NoChrysalis/Atreus_NoChrysalis.ino`
 
 ---
 
@@ -14,101 +13,112 @@ Chrysalis export `2026.05.22_atreus.json` and all keys are correctly mapped.
 ```
 Arduino/
 ├── Atreus__LF/
-│   └── Atreus__LF.ino          # Original firmware WITH Chrysalis support
+│   └── Atreus__LF.ino          # Original firmware WITH Chrysalis (NOT USED)
 ├── Atreus_NoChrysalis/
-│   └── Atreus_NoChrysalis.ino  # Standalone firmware WITHOUT EEPROM (RECOMMENDED)
+│   └── Atreus_NoChrysalis.ino  # Standalone firmware (RECOMMENDED)
 ├── config/
 │   ├── karabiner.json          # Symlinked to ~/.config/karabiner/karabiner.json
 │   └── hammerspoon_init.lua    # Symlinked to ~/.hammerspoon/init.lua
-├── my_keyboard_setup.md        # Keyboard documentation
+├── my_keyboard_setup.md        # User documentation
 ├── install.md                  # Setup instructions
 ├── LLM_CONTEXT.md              # This file
-└── 2026.05.22_atreus.json      # Chrysalis keymap export (reference)
+└── 2026.05.22_atreus.json      # Chrysalis export (reference only)
 ```
 
 ---
 
-## Two Firmware Options
+## Current Firmware Features
 
-### Option 1: `Atreus__LF/Atreus__LF.ino` (NOT RECOMMENDED)
-- Uses EEPROMKeymap - keymap stored in EEPROM
-- Works with Chrysalis GUI for editing
-- TapDance DOES NOT work (EEPROM overrides firmware keymap)
+### Dual-Use Keys (Qukeys)
 
-### Option 2: `Atreus_NoChrysalis/Atreus_NoChrysalis.ino` (RECOMMENDED)
-- All keymap hardcoded in firmware
-- NO Chrysalis support
-- TapDance WORKS
-- Contains all functionality from Chrysalis export
-- Fully documented with visual key layouts
+| Key | Position | Tap | Hold |
+|-----|----------|-----|------|
+| W | (0, 1) | w | Layer 2 (UPPER) |
+| R | (0, 3) | r | Shift |
+| F | (1, 3) | f | Layer 1 (FUN) |
+| G | (1, 4) | g | Shift |
+| H | (1, 7) | h | Shift |
+| K | (1, 9) | k | Alt+Shift |
+| L | (1, 10) | l | Cmd+Shift |
 
----
+### TapDance (Double-Tap)
 
-## TapDance Implementation
-
-Currently in `Atreus_NoChrysalis.ino`:
-
-| Key | Position | Single tap | Double tap |
+| Key | Position | Single Tap | Double Tap |
 |-----|----------|------------|------------|
-| ` | Thumb row (left) | Backtick | Cmd+Shift+V (Clipy) |
-| ; | Home row (after L) | Semicolon | Cmd+Tab (App Switcher) |
-| / | Bottom row (right) | Slash | Cmd+` (Window switch) |
+| ` | Thumb row left | Backtick | Cmd+Shift+V (Clipy) |
+| ; | Thumb row right | Semicolon | Cmd+Tab (App Switcher) |
+| / | Bottom row right | Slash | Cmd+` (Window switch) |
+
+### Leader Key
+
+Position: After L on home row (position 23)
 
 ---
 
-## Layer 0 Thumb Row (Right Side) - Critical Reference
+## Layer Summary
 
-Position order: `[MO(FUN)] [Space] [;] [-] [LEAD] [Enter]`
+### Layer 0: QWERTY
+- Standard QWERTY with dual-use keys
+- TapDance on `, ;, /
+- Leader key after L
 
-```
-Position 42: MO(FUN)       - Hold for Layer 1
-Position 43: Key_Space     - Space
-Position 44: Key_Semicolon - Semicolon (plain, not TapDance)
-Position 45: Key_Minus     - Hyphen/Minus
-Position 46: LEAD(0)       - Leader key (for accents)
-Position 47: Key_Enter     - Enter
-```
+### Layer 1: FUN (hold F or MO1)
+- Symbols: ! @ # $ % ^ & * ( ) [ ] { }
+- Numbers: 0-9
+- Arrows on WASD position
+- Tilde (~) on P position (uses macro)
+
+### Layer 2: UPPER (hold W or TG2)
+- F-keys reorganized:
+  - Right top: F10, F7, F8, F9
+  - Right home: F11, F4, F5, F6
+  - Right row 2: F12, F1, F2, F3
+- Navigation on left side
+- Volume controls
+- Media keys
+
+### Layer 3: MOUSE (TG3)
+- Mouse movement and buttons
+- Clipboard shortcuts (Cmd+Z/X/C/V)
+- Numpad
 
 ---
 
 ## Key Technical Details
 
-- **Keyboard**: Keyboardio Atreus
-- **Firmware**: Kaleidoscope
-- **Plugins used**: Qukeys, Leader, TapDance, MouseKeys, Macros
-
-### Why TapDance doesn't work with Chrysalis:
-The EEPROMKeymap plugin overrides the firmware keymap at runtime. When you put
-`TD(TD_SOMETHING)` in the firmware keymap, EEPROM replaces it with whatever key
-is stored in EEPROM (from Chrysalis).
-
-### To add a new TapDance key:
-1. Add enum value: `enum { TD_EXISTING, TD_NEW };`
-2. Add to keymap: `TD(TD_NEW)` at desired position
-3. Add case in `tapDanceAction()`:
+### Tilde Key Fix
+The ~ key on Layer 1 (FUN+P position) uses a macro:
 ```cpp
-case TD_NEW:
-  return tapDanceActionKeys(tap_count, tap_dance_action,
-    Key_SingleTap, MODIFIER(Key_DoubleTap));
+case MACRO_TILDE:
+  if (keyToggledOn(keyState)) {
+    Macros.tap(LSHIFT(Key_Backtick));
+  }
+  break;
 ```
+Direct `LSHIFT(Key_Backtick)` in keymap didn't work; macro approach is required.
+
+### Why TapDance doesn't work with Chrysalis
+EEPROMKeymap plugin overrides firmware keymap. Use `Atreus_NoChrysalis` firmware instead.
 
 ---
 
 ## Common Issues
 
 ### Multiple .ino files error
-Arduino compiles ALL .ino files in a folder together. Never put two .ino files
-in the same folder. Each firmware must be in its own folder.
+Arduino compiles ALL .ino files in a folder. Keep each firmware in its own folder.
 
 ### Port busy error
-Close Chrysalis before uploading firmware.
+Close Chrysalis before uploading.
 
-### TapDance not working
-If using Chrysalis-compatible firmware, TapDance won't work. Use the
-`Atreus_NoChrysalis` firmware instead.
+### Key outputs wrong character
+Check keyboard layout in OS (should be US).
 
 ---
 
-## Pending Tasks
+## Recent Changes (2026-05-23)
 
-- User mentioned wanting `yy` double-tap shortcut but hasn't specified action
+1. Fixed Leader key position (moved back to after L on home row)
+2. Fixed tilde (~) key using macro approach
+3. Added W as dual-use key (hold = Layer 2)
+4. Reorganized Layer 2 F-keys for better ergonomics
+5. Fixed thumb row: semicolon and hyphen positions
