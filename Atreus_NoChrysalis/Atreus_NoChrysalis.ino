@@ -14,15 +14,14 @@
  *   +----+----+----+----+----+          +----+----+----+----+----+
  *   | Q  | W  | E  | R* | T  |          | Y  | U  | I  | O  | P  |  Row 0
  *   +----+----+----+----+----+          +----+----+----+----+----+
- *   | A  | S  | D  | F* | G* |          | H* | J  | K* | L* | ;  |  Row 1 (home)
+ *   | A  | S  | D  | F* | G* |          | H* | J  | K* | L* |LEAD|  Row 1 (LEADER here!)
  *   +----+----+----+----+----+----+----+----+----+----+----+----+
  *   | Z  | X  | C  | V  | B  |Alt |Tab | N  | M  | ,  | .  | /  |  Row 2
  *   +----+----+----+----+----+----+----+----+----+----+----+----+
  *   |Esc | `  |Ctrl|Shft|Bksp|Cmd |MO1 |Spc | ;  | -  | '  |Entr|  Row 3 (thumb)
  *   +----+----+----+----+----+----+----+----+----+----+----+----+
- *                                            ^    ^    ^
- *                                          MO(1) Semi Hyphen
- *                                                 Leader on ' (Quote)
+ *                                       ^^^
+ *                                   ;; TapDance (Cmd+Tab)
  *
  *   * = Dual-use key (Qukey)
  *
@@ -56,7 +55,7 @@
  *   L      l      Cmd+Shift
  *
  * ============================================================================
- * LEADER KEY SEQUENCES (Leader key is on Quote '):
+ * LEADER KEY SEQUENCES (Leader key is after L on home row):
  * ============================================================================
  * Portuguese Accents:
  *   LEAD + A           → á (acute)
@@ -181,13 +180,14 @@ KEYMAPS(
   //   +----+----+----+----+----+     +----+----+----+----+----+
   //   | Q  | W  | E  |R/Sh| T  |     | Y  | U  | I  | O  | P  |
   //   +----+----+----+----+----+     +----+----+----+----+----+
-  //   | A  | S  | D  |F/L1|G/Sh|     |H/Sh| J  |K/AS|L/CS|;/;;|  ;; = Cmd+Tab
+  //   | A  | S  | D  |F/L1|G/Sh|     |H/Sh| J  |K/AS|L/CS|LEAD|  <-- LEADER KEY
   //   +----+----+----+----+----+----+----+----+----+----+----+----+
   //   | Z  | X  | C  | V  | B  |Alt |Tab | N  | M  | ,  | .  |//''|  // = Cmd+`
   //   +----+----+----+----+----+----+----+----+----+----+----+----+
-  //   |Esc |`/''|Ctrl|Shft|Bksp|Cmd |MO1 |Spc | ;  | -  |LEAD|Entr|  `` = Clipy
+  //   |Esc |`/''|Ctrl|Shft|Bksp|Cmd |MO1 |Spc |;//;;| -  | '  |Entr|  `` = Clipy
   //   +----+----+----+----+----+----+----+----+----+----+----+----+
-  //                                                  ^ Leader key
+  //                                       ^^^
+  //                                  ;; = Cmd+Tab (TapDance)
   // Qukeys: R/G/H=Shift, F=Layer1, K=Alt+Shift, L=Cmd+Shift
   //
   [QWERTY] = KEYMAP_STACKED
@@ -198,9 +198,9 @@ KEYMAPS(
       ,Key_Esc ,TD(TD_TILDE) ,Key_LeftControl ,Key_LeftShift ,Key_Backspace ,Key_LeftGui
 
                      ,Key_Y     ,Key_U      ,Key_I     ,Key_O      ,Key_P
-                     ,Key_H     ,Key_J      ,Key_K     ,Key_L      ,TD(TD_SEMICOLON)
+                     ,Key_H     ,Key_J      ,Key_K     ,Key_L      ,LEAD(0)
        ,Key_Tab      ,Key_N     ,Key_M      ,Key_Comma ,Key_Period ,TD(TD_SLASH)
-       ,MO(FUN)      ,Key_Space ,Key_Semicolon ,Key_Minus ,LEAD(0)  ,Key_Enter
+       ,MO(FUN)      ,Key_Space ,TD(TD_SEMICOLON) ,Key_Minus ,Key_Quote  ,Key_Enter
   ),
 
   // ---------------------------------------------------------------------------
