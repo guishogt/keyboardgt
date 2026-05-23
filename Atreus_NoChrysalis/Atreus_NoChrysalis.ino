@@ -319,7 +319,7 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
     break;
   case MACRO_TILDE:
     if (keyToggledOn(keyState)) {
-      Macros.type(PSTR("~"));
+      Macros.tap(LSHIFT(Key_Backtick));
     }
     break;
   }
