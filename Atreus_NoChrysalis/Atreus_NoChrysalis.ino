@@ -225,7 +225,7 @@ KEYMAPS(
       ,Key_LeftBracket ,Key_RightBracket ,Key_Hash   ,Key_LeftCurly ,Key_RightCurly ,Key_Caret
       ,MoveToLayer(QWERTY) ,TG(UPPER) ,TG(MOUSE)     ,Key_LeftShift ,Key_Delete     ,Key_LeftControl
 
-                   ,Key_PageUp   ,Key_7 ,Key_8      ,Key_9 ,Key_Tilde
+                   ,Key_PageUp   ,Key_7 ,Key_8      ,Key_9 ,LSHIFT(Key_Backtick)
                    ,Key_0        ,Key_4 ,Key_5      ,Key_6 ,___
       ,Key_And     ,Key_Star     ,Key_1 ,Key_2      ,Key_3 ,Key_Plus
       ,Key_LeftAlt ,Key_Space    ,Key_KeypadDot ,Key_Minus ,Key_0 ,Key_Equals
