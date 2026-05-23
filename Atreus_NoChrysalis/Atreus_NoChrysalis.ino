@@ -2,30 +2,108 @@
  * ============================================================================
  * ATREUS_NOCHRYSALIS.ino - Complete Standalone Firmware
  * ============================================================================
- *
+ * Keyboardio Atreus - Kaleidoscope Firmware
  * All functionality in firmware - NO Chrysalis/EEPROM needed.
  *
+ * Last verified against Chrysalis export: 2026.05.22_atreus.json
+ * ============================================================================
+ *
+ * PHYSICAL LAYOUT (44 keys):
+ *
+ *    LEFT HAND                              RIGHT HAND
+ *   ┌────┬────┬────┬────┬────┐        ┌────┬────┬────┬────┬────┐
+ *   │ Q  │ W  │ E  │ R* │ T  │        │ Y  │ U  │ I  │ O  │ P  │ Row 0
+ *   ├────┼────┼────┼────┼────┤        ├────┼────┼────┼────┼────┤
+ *   │ A  │ S  │ D  │ F* │ G* │        │ H* │ J  │ K* │ L* │ ;  │ Row 1 (home)
+ *   ├────┼────┼────┼────┼────┼────┐┌────┼────┼────┼────┼────┼────┤
+ *   │ Z  │ X  │ C  │ V  │ B  │Alt ││Tab │ N  │ M  │ ,  │ .  │ /  │ Row 2
+ *   ├────┼────┼────┼────┼────┼────┤├────┼────┼────┼────┼────┼────┤
+ *   │Esc │ `  │Ctrl│Shft│Bksp│Cmd ││MO1 │Spc │ ;  │ -  │ '  │Entr│ Row 3 (thumb)
+ *   └────┴────┴────┴────┴────┴────┘└────┴────┴────┴────┴────┴────┘
+ *                                         ↑    ↑    ↑
+ *                                       MO(1) Semi Hyphen
+ *                                              Leader on ' (Quote)
+ *
+ *   * = Dual-use key (Qukey)
+ *
+ * ============================================================================
  * LAYERS:
- *   [0] QWERTY  - Default with dual-use keys
- *   [1] FUN     - Symbols, arrows, numpad
- *   [2] UPPER   - F-keys, navigation, media
- *   [3] MOUSE   - Mouse control, clipboard (Cmd+Z/X/C/V), numpad
+ * ============================================================================
+ *   [0] QWERTY  - Default layer with dual-use keys (Qukeys)
+ *   [1] FUN     - Symbols (!@#$%), arrows, numbers 0-9
+ *   [2] UPPER   - F-keys (F1-F12), navigation, media controls
+ *   [3] MOUSE   - Mouse movement, buttons, clipboard (Cmd+Z/X/C/V), numpad
  *
- * TAPDANCE (Double-tap shortcuts):
- *   ` ` → Cmd+Shift+V (Clipy paste)
- *   ; ; → Cmd+Tab (App Switcher)
- *   / / → Cmd+` (Window switch same app)
+ * ============================================================================
+ * TAPDANCE (Double-tap shortcuts - replaces Karabiner):
+ * ============================================================================
+ *   Key    Single Tap    Double Tap
+ *   ───    ──────────    ──────────
+ *   `      Backtick      Cmd+Shift+V (Clipy paste)
+ *   ;      Semicolon     Cmd+Tab (App Switcher)
+ *   /      Slash         Cmd+` (Switch window same app)
  *
- * DUAL-USE KEYS (Qukeys):
- *   R → tap=R, hold=Shift
- *   F → tap=F, hold=Layer1
- *   G → tap=G, hold=Shift
- *   H → tap=H, hold=Shift
- *   L → tap=L, hold=Cmd+Shift
- *   K → tap=K, hold=Alt+Shift
+ * ============================================================================
+ * DUAL-USE KEYS (Qukeys - tap vs hold):
+ * ============================================================================
+ *   Key    Tap    Hold
+ *   ───    ───    ────
+ *   R      r      Shift
+ *   F      f      Layer 1 (FUN)
+ *   G      g      Shift
+ *   H      h      Shift
+ *   K      k      Alt+Shift
+ *   L      l      Cmd+Shift
  *
- * LEADER KEY: Quote position (')
- *   LEAD + A → á, LEAD + E → é, etc.
+ * ============================================================================
+ * LEADER KEY SEQUENCES (Leader key is on Quote '):
+ * ============================================================================
+ * Portuguese Accents:
+ *   LEAD + A           → á (acute)
+ *   LEAD + LEAD + A    → â (circumflex)
+ *   LEAD + LEAD + LEAD + A → ã (tilde)
+ *   LEAD + E           → é
+ *   LEAD + LEAD + E    → ê
+ *   LEAD + I           → í
+ *   LEAD + O           → ó
+ *   LEAD + LEAD + O    → ô
+ *   LEAD + LEAD + LEAD + O → õ
+ *   LEAD + U           → ú
+ *   LEAD + N           → ñ
+ *   LEAD + C           → ç (cedilla)
+ *
+ * App Launchers:
+ *   LEAD + B           → Alfred (Cmd+Alt+Ctrl+A)
+ *   LEAD + G + N       → Skitch screenshot (Cmd+Shift+5)
+ *   LEAD + G + H       → Emoji picker (F17)
+ *   LEAD + G + Y       → App Switcher (Cmd+Tab)
+ *   LEAD + G + T       → Window switch same app (Cmd+`)
+ *
+ * Special Characters:
+ *   LEAD + /           → Backslash (\)
+ *   LEAD + ;           → Pipe (|)
+ *   LEAD + L           → Inverted question mark (¿)
+ *
+ * Text Selection:
+ *   LEAD + Q + W       → Select and copy word
+ *   LEAD + Q + E       → Select and copy line
+ *   LEAD + Q + Q       → Switch window same app
+ *
+ * VI-Like Navigation:
+ *   LEAD + V + Y       → Start of line (Cmd+Left)
+ *   LEAD + V + U       → End of line (Cmd+Right)
+ *   LEAD + V + N       → Start of document (Cmd+Home)
+ *   LEAD + V + M       → End of document (Cmd+End)
+ *   LEAD + V + R       → Up 12 lines
+ *   LEAD + V + T       → Down 12 lines
+ *
+ * Window Management (for Magnet/Rectangle):
+ *   LEAD + M + S       → Window left half (Cmd+Alt+Left)
+ *   LEAD + M + F       → Window right half (Cmd+Alt+Right)
+ *   LEAD + M + E       → Window top half (Cmd+Alt+Up)
+ *   LEAD + M + D       → Window bottom half (Cmd+Alt+Down)
+ *   LEAD + M + M       → Window fullscreen (Cmd+Alt+F)
+ *
  * ============================================================================
  */
 
@@ -98,11 +176,19 @@ enum {
 KEYMAPS(
 
   // ---------------------------------------------------------------------------
-  // LAYER 0: QWERTY
+  // LAYER 0: QWERTY - Default layer
   // ---------------------------------------------------------------------------
-  // TapDance: ` (TD_TILDE), ; (TD_SEMICOLON), / (TD_SLASH)
-  // Leader: ' (Quote position)
-  // Qukeys: R/G/H→Shift, F→Layer1, L→Cmd+Shift, K→Alt+Shift
+  // ┌────┬────┬────┬────┬────┐        ┌────┬────┬────┬────┬────┐
+  // │ Q  │ W  │ E  │R/Sh│ T  │        │ Y  │ U  │ I  │ O  │ P  │
+  // ├────┼────┼────┼────┼────┤        ├────┼────┼────┼────┼────┤
+  // │ A  │ S  │ D  │F/L1│G/Sh│        │H/Sh│ J  │K/AS│L/CS│;/;;│ TapDance: ;; → Cmd+Tab
+  // ├────┼────┼────┼────┼────┼────┐┌────┼────┼────┼────┼────┼────┤
+  // │ Z  │ X  │ C  │ V  │ B  │Alt ││Tab │ N  │ M  │ ,  │ .  │//``│ TapDance: // → Cmd+`
+  // ├────┼────┼────┼────┼────┼────┤├────┼────┼────┼────┼────┼────┤
+  // │Esc │`/``│Ctrl│Shft│Bksp│Cmd ││MO1 │Spc │ ;  │ -  │LEAD│Entr│ TapDance: `` → Clipy
+  // └────┴────┴────┴────┴────┴────┘└────┴────┴────┴────┴────┴────┘
+  //                                                   ↑ Leader key
+  // Qukeys: R/G/H=Shift, F=Layer1, K=Alt+Shift, L=Cmd+Shift
   //
   [QWERTY] = KEYMAP_STACKED
   (
@@ -114,12 +200,24 @@ KEYMAPS(
                      ,Key_Y     ,Key_U      ,Key_I     ,Key_O      ,Key_P
                      ,Key_H     ,Key_J      ,Key_K     ,Key_L      ,TD(TD_SEMICOLON)
        ,Key_Tab      ,Key_N     ,Key_M      ,Key_Comma ,Key_Period ,TD(TD_SLASH)
-       ,MO(FUN)      ,Key_Space ,Key_Minus  ,Key_Backslash ,LEAD(0)  ,Key_Enter
+       ,MO(FUN)      ,Key_Space ,Key_Semicolon ,Key_Minus ,LEAD(0)  ,Key_Enter
   ),
 
   // ---------------------------------------------------------------------------
-  // LAYER 1: FUN - Symbols & Numpad
+  // LAYER 1: FUN - Symbols, Arrows & Numbers
   // ---------------------------------------------------------------------------
+  // ┌────┬────┬────┬────┬────┐        ┌────┬────┬────┬────┬────┐
+  // │ !  │ @  │ ↑  │ $  │ %  │        │PgUp│ 7  │ 8  │ 9  │ ~  │
+  // ├────┼────┼────┼────┼────┤        ├────┼────┼────┼────┼────┤
+  // │ (  │ ←  │ ↓  │ →  │ )  │        │ 0  │ 4  │ 5  │ 6  │    │
+  // ├────┼────┼────┼────┼────┼────┐┌────┼────┼────┼────┼────┼────┤
+  // │ [  │ ]  │ #  │ {  │ }  │ ^  ││ &  │ *  │ 1  │ 2  │ 3  │ +  │
+  // ├────┼────┼────┼────┼────┼────┤├────┼────┼────┼────┼────┼────┤
+  // │L0  │TG2 │TG3 │Shft│Del │Ctrl││Alt │Spc │ .  │ -  │ 0  │ =  │
+  // └────┴────┴────┴────┴────┴────┘└────┴────┴────┴────┴────┴────┘
+  //  ↑    ↑    ↑
+  //  L0=Return to QWERTY, TG2=Lock UPPER, TG3=Lock MOUSE
+  //
   [FUN] = KEYMAP_STACKED
   (
        Key_Exclamation ,Key_At        ,Key_UpArrow   ,Key_Dollar    ,Key_Percent
@@ -134,8 +232,19 @@ KEYMAPS(
    ),
 
   // ---------------------------------------------------------------------------
-  // LAYER 2: UPPER - F-Keys & Navigation
+  // LAYER 2: UPPER - F-Keys, Navigation & Media
   // ---------------------------------------------------------------------------
+  // ┌────┬────┬────┬────┬────┐        ┌────┬────┬────┬────┬────┐
+  // │Ins │Home│ ↑  │End │PgUp│        │ ↑  │ F7 │ F8 │ F9 │F10 │
+  // ├────┼────┼────┼────┼────┤        ├────┼────┼────┼────┼────┤
+  // │Del │ ←  │ ↓  │ →  │PgDn│        │ ↓  │ F4 │ F5 │ F6 │F11 │
+  // ├────┼────┼────┼────┼────┼────┐┌────┼────┼────┼────┼────┼────┤
+  // │Ver │Vol+│    │    │    │    ││    │    │ F1 │ F2 │ F3 │F12 │
+  // ├────┼────┼────┼────┼────┼────┤├────┼────┼────┼────┼────┼────┤
+  // │L0  │Vol-│    │    │    │    ││    │    │L0  │PrSc│ScrL│Play│
+  // └────┴────┴────┴────┴────┴────┘└────┴────┴────┴────┴────┴────┘
+  //  Ver=Version info macro, Vol+/-=Volume, PrSc=PrintScreen, Play=Play/Pause
+  //
   [UPPER] = KEYMAP_STACKED
   (
        Key_Insert            ,Key_Home                 ,Key_UpArrow   ,Key_End        ,Key_PageUp
@@ -150,8 +259,20 @@ KEYMAPS(
    ),
 
   // ---------------------------------------------------------------------------
-  // LAYER 3: MOUSE - Mouse Control & Clipboard
+  // LAYER 3: MOUSE - Mouse Control, Clipboard & Numpad
   // ---------------------------------------------------------------------------
+  // ┌────┬────┬────┬────┬────┐        ┌────┬────┬────┬────┬────┐
+  // │    │MsL │Ms↑ │MsR │    │        │ ←  │Kp7 │Kp8 │Kp9 │ /  │
+  // ├────┼────┼────┼────┼────┤        ├────┼────┼────┼────┼────┤
+  // │    │Ms← │Ms↓ │Ms→ │    │        │Kp0 │Kp4 │Kp5 │Kp6 │ *  │
+  // ├────┼────┼────┼────┼────┼────┐┌────┼────┼────┼────┼────┼────┤
+  // │⌘Z  │⌘X  │⌘C  │⌘V  │    │    ││ ↑  │ →  │Kp1 │Kp2 │Kp3 │ +  │
+  // ├────┼────┼────┼────┼────┼────┤├────┼────┼────┼────┼────┼────┤
+  // │L0  │    │Ctrl│Shft│Bksp│Cmd ││ ←  │ ↓  │Kp. │ -  │Kp0 │ =  │
+  // └────┴────┴────┴────┴────┴────┘└────┴────┴────┴────┴────┴────┘
+  //  MsL/MsR=Mouse buttons, Ms↑↓←→=Mouse movement
+  //  ⌘Z/X/C/V=Undo/Cut/Copy/Paste, Kp=Keypad numbers
+  //
   [MOUSE] = KEYMAP_STACKED
   (
        ___              ,Key_mouseBtnL    ,Key_mouseUp      ,Key_mouseBtnR    ,___
